@@ -122,7 +122,7 @@ func (c *RabbitConnection) PublishMessage(key string, b []byte, priority uint8) 
 }
 
 //Consume returns messages from a channel
-func (c *RabbitConnection) Consume(queuename string) <-chan amqp.Delivery {
+func (c *RabbitConnection) ConsumeMsgs(queuename string) <-chan amqp.Delivery {
 
 	msgs, err := c.channel.Consume(
 		queuename, // queue
