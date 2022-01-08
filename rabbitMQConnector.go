@@ -96,6 +96,7 @@ func (c *RabbitConnection) Connect() error {
 		); err != nil {
 			return fmt.Errorf("error in declaring the queue %s", err)
 		}
+		log.Printf("[+] Queue %s created\n", q)
 	}
 
 	return nil
