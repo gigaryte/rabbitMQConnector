@@ -121,6 +121,23 @@ func (c *RabbitConnection) PublishMessage(key string, b []byte, priority uint8) 
 	return err
 }
 
+//Consume returns messages from a channel
+func (c *RabbitConnection) Consume(queuename string) <-chan amqp.Delivery {
+
+	msgs, err := c.channel.Consume(
+		queuename, // queue
+		"",        // consumer
+		false,     // auto-ack
+		false,     // exclusive
+		false,     // no-local
+		false,     // no-wait
+		nil,       // args
+	)
+	failOnError(err, "Failed to register a consumer")
+
+	return msgs
+}
+
 //Reconnect reconnects to the RabbitMQ server configured
 func (c *RabbitConnection) Reconnect() error {
 	if err := c.Connect(); err != nil {
