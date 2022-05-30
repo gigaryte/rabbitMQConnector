@@ -43,7 +43,7 @@ func NewConnection(name string, queues []string, username string,
 
 //Connect connects to a remote rabbitmq server
 func (c *RabbitConnection) Connect() error {
-	log.Printf("[*] Creating channel")
+	log.Debug("[*] Creating channel")
 
 	caCert, err := ioutil.ReadFile(c.certPath)
 	failOnError(err, "Failed to read CA certificate")
@@ -61,7 +61,7 @@ func (c *RabbitConnection) Connect() error {
 		tlsConfig)
 	failOnError(err, "Failed to connect to RabbitMQ server")
 
-	log.Printf("[+] Connected")
+	log.Debug("[+] Channel connected")
 
 	//Listen to NotifyClose events and send error to connection obj channel
 	go func() {
