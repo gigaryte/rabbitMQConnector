@@ -6,8 +6,8 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"log"
 
+    log "github.com/sirupsen/logrus"
 	"github.com/streadway/amqp"
 )
 
@@ -96,7 +96,6 @@ func (c *RabbitConnection) Connect() error {
 		); err != nil {
 			return fmt.Errorf("error in declaring the queue %s", err)
 		}
-		log.Printf("[+] Queue %s created\n", q)
 	}
 
 	return nil
