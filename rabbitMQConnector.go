@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"io/ioutil"
 
-    log "github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 	"github.com/streadway/amqp"
 )
 
@@ -17,6 +17,7 @@ type RabbitConnection struct {
 	password string
 	hostname string
 	port     int
+	vhost    string
 	certPath string
 	conn     *amqp.Connection
 	channel  *amqp.Channel
@@ -26,13 +27,14 @@ type RabbitConnection struct {
 
 //NewConnection creates and initializes a RabbitMQ TLS connection struct
 func NewConnection(name string, queues []string, username string,
-	password string, hostname string, port int, certPath string) *RabbitConnection {
+	password string, hostname string, vhost string, port int, certPath string) *RabbitConnection {
 	c := &RabbitConnection{
 		name:     name,
 		username: username,
 		password: password,
 		hostname: hostname,
 		port:     port,
+		vhost:    vhost,
 		queues:   queues,
 		certPath: certPath,
 		err:      make(chan error),
@@ -56,8 +58,8 @@ func (c *RabbitConnection) Connect() error {
 	}
 
 	c.conn, err = amqp.DialTLS(
-		fmt.Sprintf("amqps://%s:%s@%s:%d", c.username,
-			c.password, c.hostname, c.port),
+		fmt.Sprintf("amqps://%s:%s@%s:%d/%s", c.username,
+			c.password, c.hostname, c.port, c.vhost),
 		tlsConfig)
 	failOnError(err, "Failed to connect to RabbitMQ server")
 
