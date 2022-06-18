@@ -63,6 +63,8 @@ func (c *RabbitConnection) Connect() error {
 		tlsConfig)
 	failOnError(err, "Failed to connect to RabbitMQ server")
 
+	c.conn.Config.Heartbeat = 180
+
 	log.Debug("Channel connected")
 
 	//Listen to NotifyClose events and send error to connection obj channel
