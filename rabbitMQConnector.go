@@ -153,6 +153,6 @@ func (c *RabbitConnection) Reconnect() error {
 //failOnError logs the error received and a custom error message, then dies
 func failOnError(err error, msg string) {
 	if err != nil {
-		log.Fatalf("%s: %s", msg, err)
+		log.Errorf("%s: %s", msg, err)
 	}
 }
