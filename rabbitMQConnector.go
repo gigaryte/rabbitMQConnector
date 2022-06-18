@@ -19,10 +19,10 @@ type RabbitConnection struct {
 	port     int
 	vhost    string
 	certPath string
-	conn     *amqp.Connection
-	channel  *amqp.Channel
-	queues   []string
-	err      chan error
+	Conn     *amqp.Connection
+	Channel  *amqp.Channel
+	Queues   []string
+	Err      chan error
 }
 
 //NewConnection creates and initializes a RabbitMQ TLS connection struct
